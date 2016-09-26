@@ -13,7 +13,6 @@ defmodule MyString do
 
   def capitalize_sentences(input) do
     pieces = String.split(input, "\. ")
-    cap = Enum.map(pieces, &(String.capitalize(&1)))
-    Enum.join(cap, ". ")
+    Enum.map(pieces, &String.capitalize/1) |> Enum.join ". "
   end
 end
