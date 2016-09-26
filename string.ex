@@ -10,4 +10,10 @@ defmodule MyString do
       "/" -> one/two
     end
   end
+
+  def capitalize_sentences(input) do
+    pieces = String.split(input, "\. ")
+    cap = Enum.map(pieces, &(String.capitalize(&1)))
+    Enum.join(cap, ". ")
+  end
 end
