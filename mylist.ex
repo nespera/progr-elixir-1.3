@@ -15,4 +15,8 @@ defmodule MyList do
   def caesar([head | tail], n), do: [_caesar(head + n) | caesar(tail, n)]
   defp _caesar(char) when char <= ?z, do: char
   defp _caesar(char), do: _caesar(char - 26)
+
+  def flatten([]), do: []
+  def flatten([h | t]) when is_list(h), do: flatten(h) ++ flatten(t)
+  def flatten([h | t]), do: [h | flatten(t)]
 end
