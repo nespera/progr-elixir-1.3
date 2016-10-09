@@ -11,6 +11,10 @@ defmodule Ring do
     :global.register_name(@name, doorman)
   end
 
+  def stop do
+   send :global.whereis_name(@name), { :poison_pill }
+  end
+
   def join do
     spawn(__MODULE__, :wait_for_welcome, [])
   end
@@ -21,6 +25,8 @@ defmodule Ring do
         IO.puts "Request to join from: #{inspect pid}"
         send first, {:please_welcome, pid}
         wait_for_joiners(first)
+      { :poison_pill } ->
+        send first, { :poison_pill }
     end
   end
 
@@ -40,6 +46,9 @@ defmodule Ring do
       { :tick } ->
         IO.puts("Got tick: #{inspect self()}")
         client(next, true)
+      { :poison_pill } ->
+        IO.puts("Bye!")
+        send next, { :poison_pill }
     after
       @interval ->
         case ticking do
