@@ -7,4 +7,8 @@ defmodule Stack.Server do
      [head | tail] -> {:reply, head, tail}
     end
   end
+
+  def handle_cast({:push, new_value}, current_state) do
+    {:noreply, [new_value | current_state]}
+  end
 end
