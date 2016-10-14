@@ -14,6 +14,10 @@ defmodule Stack.Server do
     GenServer.call(__MODULE__, :pop)
   end
 
+  def stop do
+    GenServer.stop(__MODULE__)
+  end
+
   def handle_call(:pop, _from, current_state) do
     case current_state do
      [head | tail] -> {:reply, head, tail}
@@ -22,5 +26,10 @@ defmodule Stack.Server do
 
   def handle_cast({:push, new_value}, current_state) do
     {:noreply, [new_value | current_state]}
+  end
+
+  def terminate(reason, state) do
+    IO.puts("Got terminate with reason #{inspect reason} and state #{inspect state}")
+    :ok
   end
 end
