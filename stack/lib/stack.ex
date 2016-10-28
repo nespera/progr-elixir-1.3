@@ -3,12 +3,12 @@ defmodule Stack do
 
   # See http://elixir-lang.org/docs/stable/elixir/Application.html
   # for more information on OTP Applications
-  def start(_type, _args) do
+  def start(_type, args) do
     import Supervisor.Spec, warn: false
 
     # Define workers and child supervisors to be supervised
     children = [
-      worker(Stack.Server, [[3, 4, 5, 12, 13]]),
+      worker(Stack.Server, [args]),
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
